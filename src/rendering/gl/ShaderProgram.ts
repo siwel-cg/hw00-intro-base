@@ -11,6 +11,10 @@ export class Shader {
     this.shader = gl.createShader(type);
     gl.shaderSource(this.shader, source);
     gl.compileShader(this.shader);
+    
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
 
     if (!gl.getShaderParameter(this.shader, gl.COMPILE_STATUS)) {
       throw gl.getShaderInfoLog(this.shader);
@@ -30,8 +34,11 @@ class ShaderProgram {
   unifViewProj: WebGLUniformLocation;
   unifColor: WebGLUniformLocation;
 
+  unifTime: WebGLUniformLocation;
+
   constructor(shaders: Array<Shader>) {
     this.prog = gl.createProgram();
+    
 
     for (let shader of shaders) {
       gl.attachShader(this.prog, shader.shader);
@@ -48,6 +55,8 @@ class ShaderProgram {
     this.unifModelInvTr = gl.getUniformLocation(this.prog, "u_ModelInvTr");
     this.unifViewProj   = gl.getUniformLocation(this.prog, "u_ViewProj");
     this.unifColor      = gl.getUniformLocation(this.prog, "u_Color");
+
+    this.unifTime       = gl.getUniformLocation(this.prog, "u_Time");
   }
 
   use() {
@@ -82,6 +91,13 @@ class ShaderProgram {
     this.use();
     if (this.unifColor !== -1) {
       gl.uniform4fv(this.unifColor, color);
+    }
+  }
+
+  setTime(time: number) {
+    this.use();
+    if (this.unifTime !== -1) {
+      gl.uniform1f(this.unifTime, time);
     }
   }
 
