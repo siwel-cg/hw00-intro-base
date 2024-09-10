@@ -52,6 +52,7 @@ function loadScene() {
 
 function main() {
   // Initial display for framerate
+  // hello I am a test comment
   const stats = Stats();
   stats.setMode(0);
   stats.domElement.style.position = 'absolute';
