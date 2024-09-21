@@ -31,7 +31,7 @@ void main()
         float diffuseTerm = dot(normalize(fs_Nor), normalize(fs_LightVec));
         // Avoid negative lighting values
         // diffuseTerm = clamp(diffuseTerm, 0, 1);
-
+        //test
         float ambientTerm = 0.2;
 
         float lightIntensity = diffuseTerm + ambientTerm;   //Add a small float value to the color multiplier
